@@ -3,6 +3,13 @@ syntax enable
 set encoding=utf-8
 set showcmd                     " display incomplete commands
 filetype plugin indent on       " load file type plugins + indentation
+let mapleader = ","
+
+" source .vimrc when it has changed
+au! BufWritePost .vimrc source %
+
+"" automatically save all buffers when focus lost
+:au FocusLost * silent! wa
 
 "" Whitespace
 set nowrap                      " don't wrap lines
@@ -23,6 +30,11 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
+
+"" Switch between last and this file with ,,
+
+nnoremap <leader><leader> <c-^>
+
 "" Vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -31,7 +43,10 @@ call vundle#rc()
 " required!
 Bundle 'gmarik/vundle'
 Bundle 'kien/ctrlp.vim'
-
+Bundle 'rodjek/vim-puppet'
+Bundle 'mileszs/ack.vim'
+Bundle 'tpope/vim-commentary'
+Bundle 'godlygeek/tabular'
 
 "" CtrlP
 
