@@ -2,8 +2,10 @@ set nocompatible                " choose no compatibility with legacy vi
 syntax enable
 set encoding=utf-8
 set showcmd                     " display incomplete commands
+set number                      " show line numbers
 filetype plugin indent on       " load file type plugins + indentation
 let mapleader = ","
+
 
 " source .vimrc when it has changed
 au! BufWritePost .vimrc source %
@@ -47,8 +49,14 @@ Bundle 'rodjek/vim-puppet'
 Bundle 'mileszs/ack.vim'
 Bundle 'tpope/vim-commentary'
 Bundle 'godlygeek/tabular'
-
+Bundle 'Lokaltog/powerline'
+Bundle 'tpope/vim-fugitive'
 "" CtrlP
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+
+" Powerline
+set laststatus=2 " Always display the statusline in all windows
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
