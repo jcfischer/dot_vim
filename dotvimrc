@@ -49,8 +49,13 @@ Bundle 'rodjek/vim-puppet'
 Bundle 'mileszs/ack.vim'
 Bundle 'tpope/vim-commentary'
 Bundle 'godlygeek/tabular'
-Bundle 'Lokaltog/powerline'
 Bundle 'tpope/vim-fugitive'
+Bundle 'guns/vim-clojure-static'
+Bundle 'tpope/vim-fireplace'
+Bundle 'tpope/vim-classpath'
+Bundle 'jpalardy/vim-slime'
+Bundle 'altercation/vim-colors-solarized'
+
 "" CtrlP
 
 let g:ctrlp_map = '<c-p>'
@@ -60,3 +65,45 @@ let g:ctrlp_cmd = 'CtrlP'
 set laststatus=2 " Always display the statusline in all windows
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+
+"" Slime
+
+let g:slime_target = "tmux"
+
+" Escape/unescape & < > HTML entities in range (default current line).
+function! HtmlEntities(line1, line2, action)
+  let search = @/
+  let range = 'silent ' . a:line1 . ',' . a:line2
+  if a:action == 0  " must convert &amp; last
+    execute range . 'sno/&lt;/</eg'
+    execute range . 'sno/&gt;/>/eg'
+    execute range . 'sno/&amp;/&/eg'
+  else              " must convert & first
+    execute range . 'sno/&/&amp;/eg'
+    execute range . 'sno/</&lt;/eg'
+    execute range . 'sno/>/&gt;/eg'
+  endif
+  nohl
+  let @/ = search
+endfunction
+command! -range -nargs=1 Entities call HtmlEntities(<line1>, <line2>, <args>)
+noremap <silent> \h :Entities 0<CR>
+noremap <silent> \H :Entities 1<CR>
+
+
+let g:solarized_termtrans = 1
+set background=light
+colorscheme solarized
+
+
+" Yank text to the OS X clipboard
+noremap <leader>y "*y
+noremap <leader>yy "*Y
+
+" Preserve indentation while pasting text from the OS X clipboard
+noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
+
+
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
